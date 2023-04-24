@@ -64,3 +64,4 @@ def products_reviews_api_view(request):
     avg_stars = Review.objects.aggregate(avg=Avg('stars'))
     data_dict = ReviewSerializer(products_reviews, many=True).data
     return Response(data=[data_dict, avg_stars])
+
