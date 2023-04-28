@@ -21,8 +21,8 @@ class Product(models.Model):
 
 class Review(models.Model):
     text = models.TextField(null=True, blank=True)
-    stars = models.IntegerField(blank=True, validators=[MaxValueValidator(5), MinValueValidator(1)])
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='product_reviews')
+    stars = models.IntegerField(blank=True, validators=[MaxValueValidator(5), MinValueValidator(1)], default=1)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='product_review')
 
     def __str__(self):
         return self.text
