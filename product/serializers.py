@@ -1,6 +1,7 @@
+from abc import ABC
+
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
-from rest_framework.response import Response
 
 from product.models import Product, Review, Category, Tag
 
@@ -9,6 +10,10 @@ class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
         fields = 'name'.split()
+
+
+class TagValidateSerializer(serializers.Serializer, ABC):
+    name = serializers.CharField(max_length=100)
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -27,8 +32,6 @@ class ProductValidateSerializer(serializers.Serializer):
     price = serializers.IntegerField()
     category_id = serializers.IntegerField(min_value=1)
     tags = serializers.ListField(child=serializers.IntegerField())
-
-    # missing_tags = serializers.SerializerMethodField(read_only=True)
 
     def validate_category_id(self, category_id):
         try:
